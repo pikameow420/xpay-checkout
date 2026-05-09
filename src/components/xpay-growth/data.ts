@@ -115,7 +115,7 @@ export const phases: Phase[] = [
     tasks: [
       {
         name: 'ICP Definition & Scoring',
-        desc: 'Define Tier 1 (Indian SaaS, $50K+/mo international), Tier 2 (D2C/Artisan on Shopify), Tier 3 (Freelancers). Build lead scoring system in CRM.',
+        desc: 'Define Tier 1 (Indian SaaS, $50K+/mo international),  Tier 2 (Remote Freelancing Platforms), Tier 3 (D2C/Artisan on Shopify & WooCommerce). Build/Improve lead scoring system in CRM.',
       },
       {
         name: '5 Case Studies with Real Numbers',
@@ -126,19 +126,19 @@ export const phases: Phase[] = [
         desc: 'Move 30-day free trial from blog to homepage hero, above the fold. A/B test vs current homepage. Track trial-to-paid conversion weekly.',
       },
       {
-        name: 'Payment Cost Calculator (Live)',
+        name: 'Payment Cost Calculator',
         desc: 'Ship interactive calculator. Embed on homepage. Creates inbound intent signal from visitors who spend time with it.',
       },
       {
-        name: 'Soham LinkedIn Content Machine',
+        name: 'LinkedIn Content Machine (Double down)',
         desc: '3 posts/week: one case study, one competitor teardown, one founder lesson. Every post ends with a soft CTA to free trial.',
-      },
+      }
     ],
     kpis: [
       { name: 'Case studies published', val: '5' },
       { name: 'Trial signups (monthly)', val: '+40%' },
       { name: 'Homepage trial CTA CVR', val: '≥3.5%' },
-      { name: 'LinkedIn reach (Soham)', val: '50K / week' },
+      { name: 'LinkedIn reach', val: '50K / week' },
     ],
   },
   {
@@ -152,15 +152,11 @@ export const phases: Phase[] = [
     tasks: [
       {
         name: 'Shopify & WooCommerce Plugin',
-        desc: 'Ship xPay as a Shopify App Store plugin. Target the 121K+ India Shopify stores. Passive inbound from artisan, wellness, and D2C brands — no sales rep needed.',
+        desc: 'Ship xPay as a Shopify App Store plugin. Target the 121K+ India Shopify stores. Passive inbound from Tier 2 & Tier 3 businesses.',
       },
       {
         name: 'Accelerator Partnership Blitz',
-        desc: 'Sign deals with 3 Indian accelerators (GSF, Antler India, Surge) as "Official Payment Gateway." Pitch deck focused on YC W24 credibility + FIRC simplicity.',
-      },
-      {
-        name: 'Vertical Outreach Sequences',
-        desc: 'Build 4 cold email sequences: SaaS (recurring billing pain), EdTech (BNPL international), IT Agencies (invoice settlement), Wellness D2C (Shopify fees).',
+        desc: 'Sign deals with 3 Indian accelerators (GSF, Antler India, Surge) as "Official Payment Gateway." Pitch deck focused on YC W24 credibility, global subscription feature & FIRC simplicity.',
       },
       {
         name: 'CA / Tax Firm Referral Program',
@@ -211,7 +207,7 @@ export const phases: Phase[] = [
     kpis: [
       { name: 'Monthly transactions', val: '2× baseline' },
       { name: 'Enterprise accounts closed', val: '5+' },
-      { name: 'Trial → paid CVR', val: '≥45%' },
+      { name: 'Trial → paid CVR', val: '≥80%' },
       { name: 'Referral-sourced signups', val: '20%+ of new' },
     ],
   },

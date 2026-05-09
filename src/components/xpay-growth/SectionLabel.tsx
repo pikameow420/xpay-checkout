@@ -15,7 +15,7 @@ export function SectionLabel({ index, label, className }: SectionLabelProps) {
       )}
     >
       <div className="h-px w-6 bg-xpay-accent" />
-      {index} — {label}
+      {index} - {label}
     </div>
   )
 }

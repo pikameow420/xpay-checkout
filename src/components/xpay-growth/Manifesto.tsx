@@ -14,16 +14,16 @@ export function Manifesto() {
         </h2>
         <p className="mx-auto mb-14 max-w-xl text-base font-light leading-loose text-xpay-muted">
           The infrastructure is right, the timing is right, and India&apos;s SaaS export economy is only
-          accelerating. What xPay needs now isn&apos;t more hustle — it&apos;s repeatable, scalable growth
+          accelerating. What xPay needs now isn&apos;t more hustle but repeatable, scalable growth
           architecture: clear ICPs, social proof that converts, distribution partnerships, and a sales machine
           that works without the founders in every call.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <a
-            href="mailto:hello@xpaycheckout.com"
+            href="mailto:advit.mahale@gmail.com"
             className="rounded-xl bg-xpay-accent px-8 py-3.5 font-['Syne',sans-serif] text-sm font-bold tracking-wide text-xpay-bg shadow-none transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xpay-glow-lg"
           >
-            Let&apos;s build this together →
+            Let&apos;s kill Stripe →
           </a>
           <a
             href="#calculator"

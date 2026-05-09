@@ -13,7 +13,7 @@ export function Hero() {
 
       <div className="relative z-10 max-w-5xl">
         <p className="mb-5 animate-[xpay-fade-up_0.6s_ease_both] font-['IBM_Plex_Mono',monospace] text-xs tracking-widest text-xpay-accent uppercase [animation-delay:50ms]">
-          Growth Strategy Proposal — xPay 2026
+          Growth Strategy Proposal - xPay 2026
         </p>
         <h1 className="animate-[xpay-fade-up_0.6s_ease_both] font-['Syne',sans-serif] text-[clamp(52px,8vw,96px)] leading-[0.96] font-extrabold tracking-tighter text-xpay-fg [animation-delay:200ms]">
           xPay should own
@@ -23,8 +23,8 @@ export function Hero() {
           going global.
         </h1>
         <p className="mt-7 max-w-xl animate-[xpay-fade-up_0.6s_ease_both] text-base font-light leading-relaxed text-xpay-muted [animation-delay:350ms]">
-          A research-backed case for how xPay grows from 1M transactions/month to 10M — with a live fee
-          comparison tool and a 90-day sales playbook built from first principles.
+          A research-backed case for how xPay grows from 1M transactions/month to 10M, with a fee
+          comparison tool and a 90-day growth playbook.
         </p>
         <div className="mt-14 flex animate-[xpay-fade-up_0.6s_ease_both] flex-wrap items-center gap-10 [animation-delay:500ms]">
           {heroStats.map((stat, index) => (
