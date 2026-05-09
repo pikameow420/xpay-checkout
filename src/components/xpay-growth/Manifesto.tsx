@@ -20,10 +20,12 @@ export function Manifesto() {
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <a
-            href="mailto:advit.mahale@gmail.com"
+            href="https://www.linkedin.com/in/advit-mahale/"
+            target="_blank"
+            rel="noreferrer"
             className="rounded-xl bg-xpay-accent px-8 py-3.5 font-['Syne',sans-serif] text-sm font-bold tracking-wide text-xpay-bg shadow-none transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xpay-glow-lg"
           >
-            Let&apos;s kill Stripe →
+            Let&apos;s kill Stripe together? →
           </a>
           <a
             href="#calculator"

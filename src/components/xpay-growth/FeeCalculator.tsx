@@ -10,13 +10,24 @@ import {
   settlementTags,
 } from './data'
 
+const MIN_AMOUNT = 1_000
+const MAX_AMOUNT = 1_000_000
+const AMOUNT_STEP = 1_000
+
 function calcFee(provider: Provider, amount: number) {
   return amount * (provider.feeRate + provider.fxMarkup) + provider.fixed
 }
 
-function formatMoney(amount: number, symbol: string) {
+const currencyLocaleMap: Record<Currency['code'], string> = {
+  USD: 'en-US',
+  GBP: 'en-GB',
+  EUR: 'de-DE',
+  CAD: 'en-CA',
+}
+
+function formatMoney(amount: number, symbol: string, locale: string) {
   if (amount >= 1000) {
-    return symbol + amount.toLocaleString('en-IN', { maximumFractionDigits: 0 })
+    return symbol + amount.toLocaleString(locale, { maximumFractionDigits: 0 })
   }
   return symbol + amount.toFixed(2)
 }
@@ -34,10 +45,11 @@ const settlementTypeClass = {
 } as const
 
 export function FeeCalculator() {
-  const [amount, setAmount] = useState(5000)
+  const [amount, setAmount] = useState(300_000)
   const [currency, setCurrency] = useState<Currency>(currencies[0])
+  const activeLocale = currencyLocaleMap[currency.code]
 
-  const clamp = useCallback((n: number) => Math.max(100, Math.min(100_000, n)), [])
+  const clamp = useCallback((n: number) => Math.max(MIN_AMOUNT, Math.min(MAX_AMOUNT, n)), [])
 
   const rows = useMemo(
     () =>
@@ -49,7 +61,7 @@ export function FeeCalculator() {
     [amount],
   )
 
-  const maxFee = Math.max(...rows.map((r) => r.fee), 1)
+  const maxNet = Math.max(...rows.map((r) => r.net), 1)
   const xpayFee = rows[0].fee
   const stripeFee = rows.find((r) => r.name === 'Stripe')?.fee ?? 0
   const savingsVsStripe = stripeFee - xpayFee
@@ -82,8 +94,9 @@ export function FeeCalculator() {
               </span>
               <input
                 type="number"
-                min={100}
-                max={100_000}
+                min={MIN_AMOUNT}
+                max={MAX_AMOUNT}
+                step={AMOUNT_STEP}
                 value={amount}
                 onChange={(e) => {
                   const n = Number(e.target.value)
@@ -97,12 +110,12 @@ export function FeeCalculator() {
 
           <div className="mb-6">
             <label className="mb-3 block font-['IBM_Plex_Mono',monospace] text-xs tracking-widest text-xpay-muted uppercase">
-              Adjust with slider
+              Adjust with slider ({currency.symbol}1K to {currency.symbol}1M)
             </label>
             <Slider
-              min={100}
-              max={100_000}
-              step={100}
+              min={MIN_AMOUNT}
+              max={MAX_AMOUNT}
+              step={AMOUNT_STEP}
               value={[amount]}
               onValueChange={(v) => {
                 const next = Array.isArray(v) ? v[0] : v
@@ -111,8 +124,8 @@ export function FeeCalculator() {
               className="mb-2 w-full [&_[data-slot=slider-track]]:h-1 [&_[data-slot=slider-track]]:rounded-full [&_[data-slot=slider-track]]:bg-white/10 [&_[data-slot=slider-range]]:rounded-full [&_[data-slot=slider-range]]:bg-xpay-accent [&_[data-slot=slider-thumb]]:size-5 [&_[data-slot=slider-thumb]]:border-2 [&_[data-slot=slider-thumb]]:border-xpay-bg [&_[data-slot=slider-thumb]]:bg-xpay-accent [&_[data-slot=slider-thumb]]:shadow-xpay-thumb [&_[data-slot=slider-thumb]]:ring-0"
             />
             <div className="flex justify-between font-['IBM_Plex_Mono',monospace] text-xs text-xpay-dim">
-              <span>$100</span>
-              <span>$100K</span>
+              <span>{currency.symbol}1K</span>
+              <span>{currency.symbol}1M</span>
             </div>
           </div>
 
@@ -140,7 +153,7 @@ export function FeeCalculator() {
 
           <div>
             <label className="mb-2 block font-['IBM_Plex_Mono',monospace] text-xs tracking-widest text-xpay-muted uppercase">
-              Settlement speed
+              Payment Provider
             </label>
             <div className="flex flex-wrap gap-2">
               {settlementTags.map((t) => (
@@ -158,12 +171,13 @@ export function FeeCalculator() {
         <div className="flex flex-col gap-3">
           {rows.map((row, index) => {
             const colors = barColors[row.colorKey]
-            const widthPct = maxFee > 0 ? Math.max(4, (row.fee / maxFee) * 100) : 4
+            const widthPct = maxNet > 0 ? Math.max(4, (row.net / maxNet) * 100) : 4
             const isXpay = index === 0
+            const deltaVsXpay = row.fee - xpayFee
             return (
               <div
                 key={row.name}
-                className={`relative grid items-center gap-3 rounded-xl px-5 py-4 transition-[border-color] duration-200 [grid-template-columns:130px_1fr_auto] ${
+                className={`relative grid items-center gap-3 rounded-xl px-5 py-4 transition-[border-color] duration-200 [grid-template-columns:140px_1fr_auto] ${
                   isXpay
                     ? 'border border-xpay-accent-line bg-xpay-accent-soft'
                     : 'border border-xpay-line bg-xpay-surface'
@@ -176,7 +190,6 @@ export function FeeCalculator() {
                 ) : null}
                 <div>
                   <div className="font-['Syne',sans-serif] text-sm font-semibold text-xpay-fg">{row.name}</div>
-                  <div className="mt-0.5 text-xs tracking-wide text-xpay-muted uppercase">{row.desc}</div>
                 </div>
                 <div className="relative">
                   <div className="h-1.5 w-full rounded-full bg-white/10">
@@ -185,13 +198,22 @@ export function FeeCalculator() {
                       style={{ width: `${widthPct}%` }}
                     />
                   </div>
+                  {!isXpay ? (
+                    <div className="mt-1 font-['IBM_Plex_Mono',monospace] text-[10px] text-xpay-dim">
+                      +{formatMoney(deltaVsXpay, currency.symbol, activeLocale)} more fees vs xPay
+                    </div>
+                  ) : (
+                    <div className="mt-1 font-['IBM_Plex_Mono',monospace] text-[10px] text-xpay-accent">
+                      Baseline cost benchmark
+                    </div>
+                  )}
                 </div>
                 <div className="text-right">
-                  <div className={`font-['IBM_Plex_Mono',monospace] text-sm font-medium ${colors.text}`}>
-                    {formatMoney(row.fee, currency.symbol)}
+                  <div className={`font-['IBM_Plex_Mono',monospace] text-base font-semibold ${colors.text}`}>
+                    {formatMoney(row.net, currency.symbol, activeLocale)}
                   </div>
                   <div className="mt-0.5 font-['IBM_Plex_Mono',monospace] text-xs text-xpay-dim">
-                    → {formatMoney(row.net, currency.symbol)}
+                    Fees: {formatMoney(row.fee, currency.symbol, activeLocale)}
                   </div>
                 </div>
               </div>
@@ -202,15 +224,15 @@ export function FeeCalculator() {
             <div className="mt-1 rounded-xl border border-xpay-accent-line bg-xpay-accent-soft px-5 py-4 text-sm font-light leading-relaxed text-xpay-accent">
               On a{' '}
               <span className="font-semibold font-['IBM_Plex_Mono',monospace]">
-                {formatMoney(amount, currency.symbol)}
+                {formatMoney(amount, currency.symbol, activeLocale)}
               </span>{' '}
               transaction, xPay saves you{' '}
               <strong className="font-['Syne',sans-serif]">
-                {formatMoney(savingsVsStripe, currency.symbol)} vs Stripe
+                {formatMoney(savingsVsStripe, currency.symbol, activeLocale)} vs Stripe
               </strong>{' '}
               — that&apos;s{' '}
               <strong className="font-['IBM_Plex_Mono',monospace]">
-                {formatMoney(annualized, currency.symbol)}/year
+                {formatMoney(annualized, currency.symbol, activeLocale)}/year
               </strong>{' '}
               on just one monthly client payment. At scale, this is a significant P&amp;L line.
             </div>

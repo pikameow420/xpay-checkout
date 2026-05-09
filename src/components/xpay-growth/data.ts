@@ -77,12 +77,12 @@ export const currencies = [
 export type Currency = (typeof currencies)[number]
 
 export const settlementTags = [
-  { label: 'xPay — 24 hrs ✓', type: 'fast' as const },
-  { label: 'Skydo — 2–3 days', type: 'med' as const },
-  { label: 'Stripe — 5–7 days', type: 'slow' as const },
-  { label: 'PayPal — 3–5 days', type: 'slow' as const },
-  { label: 'Bank wire — 5–7 days', type: 'slow' as const },
-  { label: 'Payoneer — 2–3 days', type: 'med' as const },
+  { label: 'xPay', type: 'fast' as const },
+  { label: 'Skydo', type: 'med' as const },
+  { label: 'Stripe', type: 'slow' as const },
+  { label: 'PayPal', type: 'slow' as const },
+  { label: 'Bank wire', type: 'slow' as const },
+  { label: 'Payoneer', type: 'med' as const },
 ]
 
 export const heroStats = [
@@ -115,7 +115,7 @@ export const phases: Phase[] = [
     tasks: [
       {
         name: 'ICP Definition & Scoring',
-        desc: 'Define Tier 1 (Indian SaaS, $50K+/mo international),  Tier 2 (Remote Freelancing Platforms), Tier 3 (D2C/Artisan on Shopify & WooCommerce). Build/Improve lead scoring system in CRM.',
+        desc: 'Define Tier 1 (Indian SaaS, $50K+/mo international),  Tier 2 (Remote Freelancing Platforms), Tier 3 (D2C on Shopify & WooCommerce). Build/Improve lead scoring system in CRM.',
       },
       {
         name: '5 Case Studies with Real Numbers',
