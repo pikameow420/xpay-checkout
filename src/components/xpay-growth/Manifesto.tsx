@@ -12,12 +12,6 @@ export function Manifesto() {
           <br />
           <span className="text-xpay-accent">The next 100× comes from the system.</span>
         </h2>
-        <p className="mx-auto mb-14 max-w-xl text-base font-light leading-loose text-xpay-muted">
-          The infrastructure is right, the timing is right, and India&apos;s SaaS export economy is only
-          accelerating. What xPay needs now isn&apos;t more hustle but repeatable, scalable growth
-          architecture: clear ICPs, social proof that converts, distribution partnerships, and a sales machine
-          that works without the founders in every call.
-        </p>
         <div className="flex flex-wrap justify-center gap-4">
           <a
             href="https://www.linkedin.com/in/advit-mahale/"
